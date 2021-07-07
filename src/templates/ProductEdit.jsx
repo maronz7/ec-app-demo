@@ -10,6 +10,7 @@ const ProductEdit = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [images, setImages] = useState([]);
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("");
 
@@ -46,7 +47,7 @@ const ProductEdit = () => {
   return (
     <section className="c-section-container">
       <h2 className="u-text__headline u-text-center">商品情報の登録</h2>
-      <ImageArea />
+      <ImageArea images={images} setImages={setImages} />
       <TextInput
         fullWidth={true}
         label={"商品名"}

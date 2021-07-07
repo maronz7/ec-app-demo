@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import { makeStyles } from "@material-ui/styles";
 import { storage } from "../../firebase/index";
+import ImagePreview from "./ImagePreview";
 
 const useStyles = makeStyles({
   icon: {
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ImageArea = () => {
+const ImageArea = (props) => {
   const classes = useStyles();
 
   const uploadImage = useCallback(
@@ -33,24 +34,33 @@ const ImageArea = () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           const newImage = { id: fileName, path: downloadURL };
           props.setImages((prevState) => [...prevState, newImage]);
+          console.log(newImage);
         });
       });
     },
-    [props.setImages]
+    [props]
   );
 
   return (
     <div>
+      <div className="p-grid__list-images">
+        {props.images.length > 0 &&
+          props.images.map((image) => (
+            <ImagePreview path={image.path} id={props.id} key={image.id} />
+          ))}
+      </div>
       <div className="u-text-right">
         <span>商品画像を登録する</span>
-        <IconButton className={classes}>
-          <AddPhotoAlternateIcon />
-          <input
-            className="u-display-none"
-            type="file"
-            id="image"
-            onChange={() => uploadImage()}
-          />
+        <IconButton className={classes.icon}>
+          <label>
+            <AddPhotoAlternateIcon />
+            <input
+              className="u-display-none"
+              type="file"
+              id="image"
+              onChange={(e) => uploadImage(e)}
+            />
+          </label>
         </IconButton>
       </div>
     </div>
