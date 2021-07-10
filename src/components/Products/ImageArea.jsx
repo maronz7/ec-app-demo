@@ -15,6 +15,21 @@ const useStyles = makeStyles({
 const ImageArea = (props) => {
   const classes = useStyles();
 
+  const deleteImage = useCallback(
+    async (id) => {
+      const ref = window.confirm("この画像を削除しますか？");
+
+      if (!ref) {
+        return false;
+      } else {
+        const newImages = props.images.filter((image) => image.id !== id);
+        props.setImages(newImages);
+        return storage.ref("images").child(id).delete();
+      }
+    },
+    [props.images]
+  );
+
   const uploadImage = useCallback(
     (event) => {
       const file = event.target.files;
@@ -34,7 +49,6 @@ const ImageArea = (props) => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           const newImage = { id: fileName, path: downloadURL };
           props.setImages((prevState) => [...prevState, newImage]);
-          console.log(newImage);
         });
       });
     },
@@ -46,7 +60,12 @@ const ImageArea = (props) => {
       <div className="p-grid__list-images">
         {props.images.length > 0 &&
           props.images.map((image) => (
-            <ImagePreview path={image.path} id={props.id} key={image.id} />
+            <ImagePreview
+              path={image.path}
+              id={image.id}
+              key={image.id}
+              delete={deleteImage}
+            />
           ))}
       </div>
       <div className="u-text-right">

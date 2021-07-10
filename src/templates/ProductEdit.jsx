@@ -44,6 +44,10 @@ const ProductEdit = () => {
     { id: "shirt", name: "シャツ" },
   ];
 
+  const fetchConsole = () => {
+    console.log("は？");
+  };
+
   return (
     <section className="c-section-container">
       <h2 className="u-text__headline u-text-center">商品情報の登録</h2>
@@ -57,6 +61,7 @@ const ProductEdit = () => {
         value={name}
         type={"text"}
         onChange={inputName}
+        onLoadRow={() => fetchConsole()}
       />
       <TextInput
         fullWidth={true}
@@ -97,7 +102,9 @@ const ProductEdit = () => {
         <PrimaryButton
           label="商品情報を保存する"
           onClick={() =>
-            dispatch(saveProducts(name, description, category, gender, price))
+            dispatch(
+              saveProducts(name, description, category, gender, price, images)
+            )
           }
         />
       </div>
