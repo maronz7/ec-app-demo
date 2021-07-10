@@ -7,6 +7,12 @@ import { saveProducts } from "../reducks/products/operations";
 const ProductEdit = () => {
   const dispatch = useDispatch();
 
+  let id = window.location.pathname.split("/product/edit")[1];
+
+  if (id !== "") {
+    id = id.split("/");
+  }
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
