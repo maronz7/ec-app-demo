@@ -13,7 +13,6 @@ const ProductEdit = () => {
 
   if (id !== "") {
     id = id.split("/")[1];
-    console.log(id);
   }
 
   const [name, setName] = useState("");
@@ -54,10 +53,6 @@ const ProductEdit = () => {
     { id: "shirt", name: "シャツ" },
   ];
 
-  const fetchConsole = () => {
-    console.log("は？");
-  };
-
   useEffect(() => {
     if (id !== "") {
       db.collection("products")
@@ -72,6 +67,7 @@ const ProductEdit = () => {
           setImages(data.images);
           setGender(data.gender);
           setPrice(data.price);
+          setSizes(data.sizes);
         });
     }
   }, [id]);
@@ -89,7 +85,6 @@ const ProductEdit = () => {
         value={name}
         type={"text"}
         onChange={inputName}
-        onLoadRow={() => fetchConsole()}
       />
       <TextInput
         fullWidth={true}
@@ -126,7 +121,7 @@ const ProductEdit = () => {
         onChange={inputPrice}
       />
       <div className="module-spacer--small"></div>
-      <SetSizesArea sizes={sizes} />
+      <SetSizesArea sizes={sizes} setSizes={setSizes} />
       <div className="module-spacer--small"></div>
 
       <div className="center">
@@ -141,7 +136,8 @@ const ProductEdit = () => {
                 category,
                 gender,
                 price,
-                images
+                images,
+                sizes
               )
             )
           }
