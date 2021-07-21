@@ -3,6 +3,21 @@ import { push } from "connected-react-router";
 
 const productsRef = db.collection("products");
 
+export const fetchProducts = () => {
+  return async (dispatch) => {
+    productsRef
+      .orderBy("updated_at", "desc")
+      .get()
+      .then((snapshots) => {
+        const productList = [];
+        snapshots.forEach((snapshot) => {
+          const product = snapshot.data();
+          productList.push(product);
+        });
+        dispatch(fetchProductsAction(productList));
+      });
+  };
+};
 export const saveProducts = (
   id,
   name,
