@@ -6,7 +6,7 @@ export const ProductsReducer = (state = initialState.products, action) => {
     case Actions.FETCH_PRODUCTS:
       return {
         state,
-        list: [...actions.payload],
+        list: [...action.payload],
       };
 
     default:
