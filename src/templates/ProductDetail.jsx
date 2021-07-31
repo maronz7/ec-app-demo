@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../firebase/index";
 import HTMLReactParser from "html-react-parser";
-import { ImageSwiper } from "../components/Products/index";
-import { Image } from "@material-ui/icons";
+import { ImageSwiper, SizeTable } from "../components/Products/index";
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
@@ -71,6 +70,7 @@ const ProductDetail = () => {
             <h2 className="u-text__headline">{product.name}</h2>
             <p>{product.price.toLocaleString()}</p>
             <div className="module-spacer--small" />
+            <SizeTable sizes={product.sizes} />
             <div className="module-spacer--small" />
             <p>{retrunCodeToBr(product.description)}</p>
           </div>
