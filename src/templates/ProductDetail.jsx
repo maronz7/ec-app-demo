@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/styles";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../firebase/index";
 import HTMLReactParser from "html-react-parser";
+import { ImageSwiper } from "../components/Products/index";
+import { Image } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
@@ -62,7 +64,9 @@ const ProductDetail = () => {
     <section className="c-section-wrapin">
       {product && (
         <div className="p-grid__row">
-          <div className={classes.sliderBox}></div>
+          <div className={classes.sliderBox}>
+            <ImageSwiper images={product.images} />
+          </div>
           <div className={classes.detail}>
             <h2 className="u-text__headline">{product.name}</h2>
             <p>{product.price.toLocaleString()}</p>
