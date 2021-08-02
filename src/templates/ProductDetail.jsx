@@ -1,9 +1,10 @@
 import { makeStyles } from "@material-ui/styles";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { db } from "../firebase/index";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { db, FirebaseTimestamp } from "../firebase/index";
 import HTMLReactParser from "html-react-parser";
 import { ImageSwiper, SizeTable } from "../components/Products/index";
+import { addProductToCart } from "../reducks/users/operations";
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
@@ -43,6 +44,7 @@ const retrunCodeToBr = (text) => {
 
 const ProductDetail = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const path = selector.router.location.pathname;
   const id = path.split("/product/")[1];
@@ -59,6 +61,26 @@ const ProductDetail = () => {
       });
   }, []);
 
+  const addProduct = useCallback(
+    (selectedSize) => {
+      const timestamp = FirebaseTimestamp.now();
+      dispatch(
+        addProductToCart({
+          added_at: timestamp,
+          description: product.description,
+          gender: product.gender,
+          name: product.name,
+          productId: product.id,
+          size: selectedSize,
+          images: product.images,
+          price: product.price,
+          quantity: 1,
+        })
+      );
+    },
+    [product]
+  );
+
   return (
     <section className="c-section-wrapin">
       {product && (
@@ -70,7 +92,7 @@ const ProductDetail = () => {
             <h2 className="u-text__headline">{product.name}</h2>
             <p>{product.price.toLocaleString()}</p>
             <div className="module-spacer--small" />
-            <SizeTable sizes={product.sizes} />
+            <SizeTable addProduct={addProduct} sizes={product.sizes} />
             <div className="module-spacer--small" />
             <p>{retrunCodeToBr(product.description)}</p>
           </div>
