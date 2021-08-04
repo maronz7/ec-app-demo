@@ -1,3 +1,4 @@
+export { default as CartList } from "./CartList";
 export { default as SignIn } from "./SignIn";
 export { default as Home } from "./Home";
 export { default as SignUp } from "./SignUp";
