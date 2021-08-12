@@ -2,6 +2,7 @@ const initialState = {
   users: {
     cart: [],
     isSignedIn: false,
+    orders: [],
     role: "",
     uid: "",
     username: "",
