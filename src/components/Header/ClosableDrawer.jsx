@@ -17,8 +17,6 @@ import HistoryIcon from "@material-ui/icons/History";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { db } from "../../firebase";
-import { getUserRole } from "../../reducks/users/selectors";
-import { FilterSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {

@@ -57,7 +57,6 @@ export const orderProduct = (productsInCart, amount) => {
             soldOutProducts.push(product.name);
             return size;
           }
-          console.log(size);
           return {
             size: size.size,
             quantity: size.quantity - 1,
@@ -75,10 +74,7 @@ export const orderProduct = (productsInCart, amount) => {
         size: product.size,
       });
 
-      console.log(updatedSizes);
-
       batch.update(productsRef.doc(product.productId), { sizes: updatedSizes });
-
       batch.delete(userRef.collection("cart").doc(product.cartId));
     }
 
